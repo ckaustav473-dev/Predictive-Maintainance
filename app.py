@@ -18,21 +18,10 @@ st.markdown("### 6G Integrated Smart Manufacturing")
 
 @st.cache_data
 def load_data():
+    df = pd.read_csv("final_manufacturing.csv")
 
-    df = pd.read_csv(
-        r"C:\Users\Lenovo\Downloads\predmain\final_manufacturing.csv"
-    )
-
-    # Safe datetime conversion
-    df["Date"] = pd.to_datetime(
-        df["Date"],
-        errors="coerce"
-    )
-
-    df["DateTime"] = pd.to_datetime(
-        df["DateTime"],
-        errors="coerce"
-    )
+    df["Date"] = pd.to_datetime(df["Date"], format="mixed", errors="coerce")
+    df["DateTime"] = pd.to_datetime(df["DateTime"], format="mixed", errors="coerce")
 
     return df
 
