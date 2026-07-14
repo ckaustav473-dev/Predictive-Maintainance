@@ -18,14 +18,27 @@ st.markdown("### 6G Integrated Smart Manufacturing")
 
 @st.cache_data
 def load_data():
-    df = pd.read_csv("Thales_Group_Manufacturing.csv")
 
-    df["Date"] = pd.to_datetime(df["Date"], format="mixed", errors="coerce")
-    df["DateTime"] = pd.to_datetime(df["DateTime"], format="mixed", errors="coerce")
+    df = pd.read_csv("final_manufacturing_small.csv")
+
+    # Show column names while debugging
+    st.write("Columns:", df.columns.tolist())
+
+    if "Date" in df.columns:
+        df["Date"] = pd.to_datetime(
+            df["Date"],
+            format="mixed",
+            errors="coerce"
+        )
+
+    if "DateTime" in df.columns:
+        df["DateTime"] = pd.to_datetime(
+            df["DateTime"],
+            format="mixed",
+            errors="coerce"
+        )
 
     return df
-
-
 df = load_data()
 
 # -------------------------------------------------------
