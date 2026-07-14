@@ -221,7 +221,7 @@ streamlit run app.py
 
 # 👨‍💻 Author
 
-**Name:** *Your Name*
+**Name:** *Kaustav Chakraborty*
 
 Project:
 **Predictive Maintenance and Anomaly Detection in 6G-Integrated Smart Manufacturing Systems**
