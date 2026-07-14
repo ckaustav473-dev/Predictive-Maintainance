@@ -1,0 +1,936 @@
+INTERNSHIP PROJECT REPORT
+Predictive Maintenance and Anomaly Detection in 6G-Integrated Smart Manufacturing Systems
+________________________________________
+Submitted By
+Name: Kaustav Chakraborty
+Internship: Data Science Internship
+Organization: Unified Mentor
+Project Duration: Jan 2026 – July 2026 
+Submission Date: 14/07/2026
+________________________________________
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Acknowledgement
+I would like to express my sincere gratitude to Unified Mentor for providing me with the opportunity to work on this Data Science Internship project.
+This internship allowed me to gain practical exposure to real-world machine learning applications in smart manufacturing. Throughout the project, I enhanced my knowledge of data preprocessing, feature engineering, anomaly detection, visualization, and dashboard development using Python and Streamlit.
+I also extend my appreciation to everyone who contributed directly or indirectly to the successful completion of this project.
+________________________________________
+
+
+
+
+
+
+
+
+
+
+
+Abstract
+The advancement of Industry 4.0 technologies has transformed conventional manufacturing into intelligent and highly connected production environments. Modern industrial machines continuously generate sensor data that can be analyzed to identify equipment degradation before failures occur. Predictive maintenance has emerged as an effective strategy to reduce maintenance costs, improve equipment reliability, and minimize production downtime.
+This project presents a predictive maintenance system for 6G-enabled smart manufacturing using the Isolation Forest algorithm. Manufacturing sensor data was preprocessed and enhanced through feature engineering techniques, including rolling averages, sensor deviations, maintenance score decay, and production efficiency metrics. The trained anomaly detection model generated anomaly scores that were further categorized into Low, Medium, and High maintenance risk levels.
+An interactive Streamlit dashboard was developed to visualize machine performance, maintenance alerts, anomaly trends, sensor behavior, production analysis, and historical risk progression. The dashboard enables maintenance engineers to monitor machine health effectively and prioritize maintenance activities before failures occur.
+The proposed system demonstrates how machine learning can improve maintenance planning, reduce operational costs, and increase manufacturing efficiency in Industry 4.0 environments.
+Keywords: Predictive Maintenance, Smart Manufacturing, Industry 4.0, 6G Networks, Isolation Forest, Anomaly Detection, Streamlit Dashboard, Machine Learning.
+________________________________________
+
+
+
+
+
+
+
+Table of Contents
+1.	Introduction 
+2.	Problem Statement 
+3.	Objectives 
+4.	Literature Review 
+5.	Dataset Description 
+6.	Data Preprocessing 
+7.	Feature Engineering 
+8.	Exploratory Data Analysis 
+9.	Machine Learning Methodology 
+10.	Isolation Forest Algorithm 
+11.	Model Implementation 
+12.	Streamlit Dashboard Development 
+13.	Results and Discussion 
+14.	Business Insights 
+15.	Recommendations 
+16.	Future Scope 
+17.	Conclusion 
+18.	References 
+________________________________________
+
+
+
+
+
+
+
+
+
+Chapter 1: Introduction
+The manufacturing industry is rapidly adopting intelligent technologies such as Artificial Intelligence (AI), Internet of Things (IoT), cloud computing, and advanced communication systems to improve operational efficiency. These technologies form the foundation of Industry 4.0, enabling continuous monitoring and optimization of industrial equipment.
+In modern manufacturing environments, machines continuously generate operational data, including temperature, vibration, power consumption, production speed, and communication metrics. Analyzing this sensor data provides valuable insights into machine health and allows organizations to identify abnormal operating conditions before equipment failures occur.
+Traditional maintenance strategies generally fall into two categories:
+•	Reactive Maintenance, where repairs are performed after a machine has failed. 
+•	Preventive Maintenance, where maintenance is scheduled at regular intervals regardless of machine condition. 
+Both approaches have limitations. Reactive maintenance often results in unexpected downtime and costly repairs, while preventive maintenance can lead to unnecessary servicing and increased operational expenses.
+Predictive maintenance addresses these challenges by using machine learning techniques to analyze sensor data and detect early signs of machine degradation. Instead of relying on fixed maintenance schedules, predictive maintenance continuously evaluates equipment health and recommends maintenance only when necessary.
+In this project, the Isolation Forest algorithm was employed to identify anomalous machine behavior using historical manufacturing data. Feature engineering techniques were applied to improve anomaly detection by capturing temporal patterns and deviations in machine performance. An interactive Streamlit dashboard was developed to present machine health indicators, maintenance risk levels, historical trends, and production insights in an easy-to-understand format.
+The proposed system demonstrates how predictive analytics can improve maintenance planning, reduce downtime, optimize resource utilization, and support intelligent decision-making in 6G-enabled smart manufacturing environments.
+________________________________________
+
+
+
+Chapter 2: Problem Statement
+Manufacturing industries frequently experience unexpected equipment failures that disrupt production schedules and increase maintenance costs. Traditional monitoring systems rely on manually defined threshold values for individual sensors. However, normal operating conditions vary across different machines, operating modes, and production environments, making fixed thresholds ineffective for identifying subtle changes in machine behavior.
+Early indicators of equipment failure are often hidden within complex multidimensional sensor data and cannot be detected through conventional monitoring techniques. Consequently, maintenance teams may fail to recognize emerging faults until significant performance degradation or equipment failure has already occurred.
+To address these challenges, an intelligent predictive maintenance system is required that can automatically learn normal machine behavior, identify abnormal operating conditions, estimate maintenance risk, and provide actionable insights to maintenance engineers.
+________________________________________
+
+
+
+
+
+
+
+
+
+
+Chapter 3: Objectives
+The primary objectives of this project are:
+•	To preprocess and analyze manufacturing sensor data. 
+•	To develop meaningful engineered features representing machine behavior. 
+•	To build an anomaly detection model using the Isolation Forest algorithm. 
+•	To generate anomaly scores for individual machine observations. 
+•	To classify maintenance risk into Low, Medium, and High categories. 
+•	To identify machines requiring immediate maintenance attention. 
+•	To develop an interactive Streamlit dashboard for predictive maintenance monitoring. 
+•	To improve operational efficiency by reducing unexpected machine failures and production downtime. 
+________________________________________
+
+
+
+
+
+
+
+
+
+
+
+Chapter 4: Literature Review
+Predictive maintenance has become one of the most important applications of Artificial Intelligence within Industry 4.0. Researchers have proposed several machine learning techniques to identify abnormal machine behavior using industrial sensor data.
+One of the most widely used unsupervised anomaly detection algorithms is Isolation Forest, introduced by Liu, Ting, and Zhou (2008). Unlike traditional classification methods, Isolation Forest does not require labeled failure data. Instead, it isolates observations by constructing random decision trees and identifies anomalies based on the number of splits required to separate each observation. This makes it particularly suitable for industrial environments where machine failures are relatively rare.
+Recent research has demonstrated that feature engineering significantly improves predictive maintenance performance. Rolling averages, sensor deviation metrics, vibration-to-power ratios, and temporal error trends provide additional information beyond raw sensor readings and enable more accurate identification of abnormal operating conditions.
+Visualization also plays an important role in predictive maintenance. Interactive dashboards developed using modern visualization frameworks such as Streamlit and Plotly allow maintenance engineers to monitor machine health, investigate anomalies, and make informed maintenance decisions without requiring extensive technical expertise.
+The proposed system combines feature engineering, Isolation Forest anomaly detection, and interactive dashboard visualization to provide a comprehensive predictive maintenance solution for smart manufacturing.
+
+
+
+
+
+
+
+Chapter 5: Dataset Description
+The dataset used in this project consists of machine sensor readings collected from a simulated 6G-enabled smart manufacturing environment. The data represents the operational status of industrial machines under different working conditions and provides the information required to detect abnormal behavior and predict maintenance requirements.
+The dataset contains 100,000 records and includes sensor measurements, communication metrics, production statistics, and maintenance indicators.
+Dataset Attributes
+Attribute	Description
+Date	Calendar date when the machine data was recorded.
+Timestamp	Time at which the machine data was collected.
+Machine_ID	Unique identifier assigned to each machine.
+Operation_Mode	Current operating mode of the machine.
+Temperature_C	Operating temperature of the machine in degrees Celsius.
+Vibration_Hz	Machine vibration frequency measured in Hertz.
+Power_Consumption_kW	Electrical power consumed by the machine in kilowatts.
+Network_Latency_ms	Communication latency over the 6G network.
+Packet_Loss_%	Percentage of communication packet loss.
+Quality_Control_Defect_Rate_%	Percentage of defective products identified during quality inspection.
+Production_Speed_units_per_hr	Number of units produced per hour.
+Predictive_Maintenance_Score	Machine maintenance readiness score.
+Error_Rate_%	Operational error percentage.
+Efficiency_Status	Manufacturing efficiency category (High, Medium, Low).
+Importance of the Dataset
+The dataset provides multiple perspectives on machine performance by combining:
+•	Sensor measurements 
+•	Communication quality 
+•	Production performance 
+•	Maintenance indicators 
+•	Machine operating conditions 
+This multidimensional information enables accurate anomaly detection using machine learning techniques.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Chapter 6: Data Preprocessing
+Raw industrial data often contains inconsistencies that can negatively affect machine learning performance. Therefore, several preprocessing techniques were applied before model development.
+6.1 Data Loading
+The manufacturing dataset was imported using the Pandas library.
+import pandas as pd
+
+df = pd.read_csv("Thales_Group_Manufacturing.csv")
+________________________________________
+6.2 Duplicate Removal
+Duplicate records can introduce bias into the machine learning model. Therefore, duplicate observations were removed from the dataset.
+df.drop_duplicates(inplace=True)
+________________________________________
+6.3 Date and Time Processing
+The Date and Timestamp columns were converted into a single DateTime feature to preserve the temporal sequence of machine observations.
+This enabled time-based analysis of machine behavior and anomaly progression.
+________________________________________
+6.4 Encoding of Categorical Variables
+Machine_ID and Operation_Mode are categorical variables. These columns were encoded into numerical values to make them suitable for machine learning algorithms.
+The following columns were encoded:
+•	Machine_ID 
+•	Operation_Mode 
+________________________________________
+6.5 Data Sorting
+The dataset was sorted based on:
+•	Machine ID 
+•	DateTime 
+Sorting ensures that rolling statistical features accurately represent machine behavior over time.
+________________________________________
+6.6 Feature Scaling
+Machine learning algorithms perform better when numerical features are standardized.
+The StandardScaler technique was used to normalize sensor values so that all variables have similar scales.
+The following features were standardized:
+•	Temperature 
+•	Vibration 
+•	Power Consumption 
+•	Network Latency 
+•	Packet Loss 
+•	Production Speed 
+•	Maintenance Score 
+•	Error Rate 
+•	Engineered Features 
+Feature scaling improves model stability and prevents variables with large numerical ranges from dominating the learning process.
+________________________________________
+
+
+
+
+
+
+Chapter 7: Feature Engineering
+Feature engineering is one of the most important stages in predictive maintenance because raw sensor values alone often fail to capture abnormal machine behavior.
+Several engineered features were developed to better represent machine conditions.
+7.1 Rolling Average Features
+Rolling averages were computed for each machine using a moving window.
+The following rolling features were created:
+•	Rolling Temperature 
+•	Rolling Vibration 
+•	Rolling Power Consumption 
+•	Rolling Error Rate 
+These features represent the normal operating behavior of each machine.
+________________________________________
+7.2 Sensor Deviation Features
+The deviation between the current sensor reading and its rolling average was calculated.
+The following deviation features were created:
+•	Temperature Deviation 
+•	Vibration Deviation 
+•	Power Deviation 
+•	Error Deviation 
+These features help identify sudden changes in machine behavior.
+________________________________________
+7.3 Vibration-to-Power Ratio
+A new feature representing the relationship between vibration and power consumption was developed.
+Machines experiencing abnormal vibration while consuming normal power often indicate early mechanical wear.
+________________________________________
+7.4 Maintenance Score Decay
+The Predictive Maintenance Score was transformed into a Maintenance Decay feature.
+Higher decay values indicate decreasing machine health.
+________________________________________
+7.5 Error Trend
+The difference between consecutive Error Rate values was calculated.
+This feature identifies machines whose operational errors are increasing over time.
+________________________________________
+7.6 Production Efficiency
+Production Efficiency was computed using the ratio of production speed to power consumption.
+Machines producing fewer units while consuming higher power may indicate declining operational performance.
+________________________________________
+Benefits of Feature Engineering
+The engineered features provide several advantages:
+•	Capture temporal behavior. 
+•	Identify gradual machine degradation. 
+•	Improve anomaly detection performance. 
+•	Reduce false alarms. 
+•	Increase predictive maintenance accuracy. 
+________________________________________
+
+
+
+Chapter 8: Exploratory Data Analysis (EDA)
+Exploratory Data Analysis (EDA) was performed to understand machine behavior, identify patterns, and discover relationships among manufacturing variables before developing the machine learning model.
+The analysis included descriptive statistics, distributions, correlations, and interactive visualizations.
+8.1 Maintenance Risk Distribution
+The dashboard presents the distribution of machines categorized into:
+•	Low Risk 
+•	Medium Risk 
+•	High Risk 
+This visualization helps maintenance engineers quickly identify the proportion of machines requiring preventive maintenance.
+ 
+
+________________________________________
+
+
+8.2 Efficiency Status Analysis
+A bar chart was used to visualize machine efficiency levels.
+The categories include:
+•	High 
+•	Medium 
+•	Low 
+This chart provides an overview of manufacturing performance.
+ 
+________________________________________
+
+
+
+
+8.3 Average Sensor Values
+The average values of important manufacturing sensors were visualized using a bar chart.
+The monitored sensors include:
+•	Temperature 
+•	Vibration 
+•	Power Consumption 
+•	Network Latency 
+•	Packet Loss 
+These statistics provide a quick understanding of overall machine operating conditions.
+ 
+________________________________________
+8.4 Correlation Analysis
+A correlation heatmap was generated to study relationships among important manufacturing variables.
+The analysis helps identify:
+•	Strong positive correlations 
+•	Strong negative correlations 
+•	Independent variables 
+Understanding these relationships assists in selecting useful features for anomaly detection.
+ 
+________________________________________
+8.5 Sensor Comparison
+Scatter plots were used to compare:
+•	Temperature vs Vibration 
+•	Power Consumption vs Error Rate 
+Each point represents a machine observation and is color-coded according to its maintenance risk.
+These visualizations help identify clusters of abnormal machine behavior.
+ 
+________________________________________
+8.6 Production Analysis
+A box plot was created to compare production speed across different operating modes.
+This analysis identifies variations in production efficiency under different machine conditions.
+ 
+________________________________________
+8.7 Network Performance
+Network Latency and Packet Loss distributions were analyzed to evaluate communication quality within the 6G-enabled manufacturing environment.
+Reliable communication is essential for real-time predictive maintenance systems.
+ 
+________________________________________
+Summary of EDA
+The exploratory analysis provided valuable insights into machine behavior, production efficiency, sensor relationships, and maintenance risk. The results confirmed that the engineered features captured meaningful operational patterns, supporting the development of an effective anomaly detection model.
+
+
+
+
+
+
+
+
+Chapter 9: Machine Learning Methodology
+The primary objective of this project is to identify abnormal machine behavior before equipment failure occurs. Since the dataset does not contain explicit labels indicating machine failures, an unsupervised machine learning approach was selected.
+The predictive maintenance workflow consists of the following stages:
+Step 1: Data Collection
+Manufacturing sensor data was collected from industrial machines operating in a 6G-enabled smart manufacturing environment. The dataset contains operational parameters such as temperature, vibration, power consumption, network latency, production speed, and maintenance scores.
+Step 2: Data Preprocessing
+The collected data was cleaned by removing duplicate records, converting date and time information into a standard format, encoding categorical variables, and standardizing numerical features.
+Step 3: Feature Engineering
+Several additional features were created to capture machine behavior more effectively. These include rolling averages, sensor deviations, maintenance score decay, error trends, and production efficiency.
+Step 4: Model Training
+The processed dataset was used to train an Isolation Forest model. The model learns the normal operating behavior of machines and identifies observations that significantly deviate from these patterns.
+Step 5: Anomaly Detection
+Each machine observation receives an anomaly score. Higher scores indicate greater deviation from normal operating behavior.
+Step 6: Maintenance Risk Classification
+Based on the anomaly score, machines are classified into:
+•	Low Risk 
+•	Medium Risk 
+•	High Risk 
+This classification helps maintenance engineers prioritize inspections and maintenance activities.
+Step 7: Dashboard Visualization
+The prediction results are presented through an interactive Streamlit dashboard, enabling users to monitor machine health, visualize trends, and download filtered datasets.
+________________________________________
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Chapter 10: Isolation Forest Algorithm
+Overview
+Isolation Forest is an unsupervised anomaly detection algorithm introduced by Liu, Ting, and Zhou (2008). Unlike traditional classification algorithms, Isolation Forest does not require labeled training data.
+The algorithm isolates observations by recursively selecting random features and random split values. Anomalies require fewer splits to isolate because they differ significantly from normal observations.
+________________________________________
+Working Principle
+The Isolation Forest algorithm follows these steps:
+1.	Randomly select a feature. 
+2.	Randomly choose a split value. 
+3.	Divide the data into partitions. 
+4.	Continue partitioning until each observation is isolated. 
+5.	Calculate the average path length. 
+6.	Assign an anomaly score. 
+Observations with shorter path lengths are more likely to be anomalies.
+________________________________________
+Why Isolation Forest?
+Isolation Forest was selected because it offers several advantages for predictive maintenance:
+•	Does not require labeled failure data. 
+•	Handles large datasets efficiently. 
+•	Performs well with high-dimensional sensor data. 
+•	Detects rare machine anomalies effectively. 
+•	Computationally efficient for real-time applications. 
+________________________________________
+
+Model Parameters
+The Isolation Forest model was configured using the following parameters:
+Parameter	Value
+Number of Trees (n_estimators)	200
+Contamination	0.05
+Random State	42
+The contamination parameter assumes that approximately 5% of observations represent anomalous machine behavior.
+________________________________________
+
+
+
+
+
+
+
+
+
+
+
+Chapter 11: Model Development
+The model was trained using the engineered numerical features created during preprocessing.
+The following variables were used for training:
+•	Temperature 
+•	Vibration 
+•	Power Consumption 
+•	Network Latency 
+•	Packet Loss 
+•	Quality Control Defect Rate 
+•	Production Speed 
+•	Predictive Maintenance Score 
+•	Error Rate 
+•	Temperature Deviation 
+•	Vibration Deviation 
+•	Power Deviation 
+•	Error Deviation 
+•	Vibration-to-Power Ratio 
+•	Maintenance Score Decay 
+•	Error Trend 
+•	Production Efficiency 
+After training, the model generated an anomaly prediction for every observation.
+________________________________________
+Anomaly Prediction
+Isolation Forest returns:
+•	1 → Normal Observation 
+•	-1 → Anomalous Observation 
+These predictions indicate whether the current machine behavior is considered normal or abnormal.
+________________________________________
+Anomaly Score Generation
+In addition to anomaly labels, the model generates an anomaly score representing the degree of abnormality.
+The scores were normalized between 0 and 1 to simplify interpretation.
+A higher anomaly score indicates that the machine is operating further away from its normal behavior.
+________________________________________
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Chapter 12: Maintenance Risk Classification
+To support maintenance planning, anomaly scores were converted into maintenance risk categories.
+The following thresholds were used:
+Anomaly Score	Maintenance Risk
+0.00 – 0.39	Low Risk
+0.40 – 0.69	Medium Risk
+0.70 – 1.00	High Risk
+Low Risk
+Machines classified as Low Risk exhibit normal operating conditions and do not require immediate maintenance.
+Medium Risk
+Medium Risk machines show early signs of abnormal behavior and should be monitored more frequently.
+High Risk
+High Risk machines demonstrate significant deviations from normal operating patterns and should be prioritized for preventive maintenance.
+________________________________________
+
+
+
+
+
+Chapter 13: Model Outputs
+The trained model produced several important outputs:
+Anomaly Score
+Represents the level of deviation from normal machine behavior.
+Maintenance Risk Level
+Each observation is classified into:
+•	Low 
+•	Medium 
+•	High 
+High-Risk Machine List
+Machines with consistently high anomaly scores are automatically identified and displayed in the dashboard.
+Historical Risk Trends
+Anomaly scores are tracked over time to monitor changes in machine health.
+Machine Performance Summary
+Average sensor values and anomaly scores are calculated for each machine.
+________________________________________
+
+
+
+
+
+
+Chapter 14: Performance Evaluation
+Since the project uses an unsupervised learning approach, traditional evaluation metrics such as Accuracy, Precision, Recall, and F1-score cannot be calculated without labeled anomaly data.
+Instead, model performance was evaluated through:
+•	Detection of abnormal sensor patterns. 
+•	Identification of high-risk machines. 
+•	Visualization of anomaly trends. 
+•	Correlation between anomaly scores and machine behavior. 
+•	Maintenance recommendations generated by the dashboard. 
+The generated anomaly scores demonstrated meaningful relationships with variations in temperature, vibration, error rate, and maintenance score, indicating that the model successfully captured abnormal machine behavior.
+________________________________________
+Advantages of the Proposed Model
+The developed predictive maintenance system provides several advantages:
+•	Early detection of abnormal machine behavior. 
+•	Reduced equipment downtime. 
+•	Improved maintenance planning. 
+•	Lower operational costs. 
+•	Better utilization of maintenance resources. 
+•	Interactive visualization through the Streamlit dashboard. 
+________________________________________
+Summary
+The Isolation Forest model effectively learned the normal operating behavior of industrial machines and identified unusual sensor patterns without requiring labeled failure data. Combined with engineered features and interactive visualization, the model provides a practical and scalable solution for predictive maintenance in smart manufacturing environments.
+
+
+
+
+Chapter 15: Streamlit Dashboard Development
+Introduction
+To make the predictive maintenance system user-friendly and interactive, a web-based dashboard was developed using the Streamlit framework. The dashboard provides maintenance engineers and decision-makers with a centralized platform to monitor machine health, detect anomalies, and analyze operational performance.
+The dashboard integrates the outputs of the Isolation Forest model with sensor data, enabling users to visualize machine behavior and maintenance risk in real time.
+The application allows users to interactively filter data based on machine ID, operation mode, maintenance risk level, and anomaly score. This flexibility helps users focus on specific machines or operational conditions requiring further investigation.
+________________________________________
+Dashboard Architecture
+The dashboard follows a modular architecture consisting of four major components:
+1.	Data Loading 
+2.	Data Filtering 
+3.	Visualization 
+4.	Report Generation 
+The workflow is illustrated below:
+Manufacturing Dataset
+        │
+        ▼
+Feature Engineering
+        │
+        ▼
+Isolation Forest Model
+        │
+        ▼
+Risk Classification
+        │
+        ▼
+Streamlit Dashboard
+        │
+        ▼
+User Interaction & Decision Making
+________________________________________
+Dashboard Modules
+1. Dashboard Overview
+The dashboard begins with a summary section displaying important Key Performance Indicators (KPIs).
+The following KPIs are presented:
+•	Total Machines 
+•	High Risk Machines 
+•	Medium Risk Machines 
+•	Low Risk Machines 
+•	Average Anomaly Score 
+•	Average Predictive Maintenance Score 
+These metrics provide a quick overview of the current condition of the manufacturing system.
+(Screenshots provided above)
+________________________________________
+2. Sidebar Filters
+The dashboard includes interactive filters that enable users to analyze selected machine data.
+Available filters include:
+•	Machine ID 
+•	Operation Mode 
+•	Maintenance Risk 
+•	Minimum Anomaly Score 
+These filters dynamically update all visualizations, allowing focused analysis.
+ 
+________________________________________
+3. Maintenance Risk Distribution
+A pie chart displays the percentage of machines classified as:
+•	Low Risk 
+•	Medium Risk 
+•	High Risk 
+This visualization enables maintenance teams to prioritize resources efficiently.
+ 
+________________________________________
+4. Efficiency Status Analysis
+A bar chart displays the number of machines operating under:
+•	High Efficiency 
+•	Medium Efficiency 
+•	Low Efficiency 
+This helps evaluate the overall production performance of the manufacturing system.
+ 
+________________________________________
+5. Average Sensor Values
+The dashboard calculates the average values of key manufacturing sensors.
+The displayed sensors include:
+•	Temperature 
+•	Vibration 
+•	Power Consumption 
+•	Network Latency 
+•	Packet Loss 
+These indicators provide an overview of the overall operational condition of the manufacturing environment.
+ 
+________________________________________
+6. Correlation Heatmap
+A correlation matrix was generated to analyze relationships among important manufacturing variables.
+The heatmap illustrates positive and negative correlations between:
+•	Temperature 
+•	Vibration 
+•	Power Consumption 
+•	Error Rate 
+•	Maintenance Score 
+•	Anomaly Score 
+Understanding these relationships supports feature analysis and maintenance planning.
+ 
+________________________________________
+7. Machine Analysis Dashboard
+The Machine Analysis section provides time-series visualizations for individual machines.
+The following parameters are monitored:
+•	Temperature Trend 
+•	Vibration Trend 
+•	Power Consumption Trend 
+•	Error Rate Trend 
+•	Anomaly Score Trend 
+These charts help identify gradual equipment degradation and abnormal operating behavior.
+ 
+ 
+ 
+ 
+ 
+________________________________________
+8. Sensor Comparison
+Scatter plots compare multiple sensor variables simultaneously.
+The dashboard visualizes:
+•	Temperature versus Vibration 
+•	Power Consumption versus Error Rate 
+Each point is color-coded according to maintenance risk and sized based on anomaly score.
+This visualization assists engineers in identifying abnormal operating clusters.
+ 
+________________________________________
+9. Production Analysis
+Production performance is analyzed using box plots representing production speed across different operation modes.
+This analysis highlights production consistency and operational variability.
+ 
+________________________________________
+10. Network Performance Analysis
+The dashboard evaluates communication quality using:
+•	Network Latency Distribution 
+•	Packet Loss Distribution 
+Reliable communication is essential for real-time predictive maintenance systems operating in smart manufacturing environments.
+ 
+________________________________________
+11. Machine Performance Summary
+A machine-wise summary table provides average values for:
+•	Temperature 
+•	Vibration 
+•	Power Consumption 
+•	Error Rate 
+•	Predictive Maintenance Score 
+•	Anomaly Score 
+The table enables maintenance engineers to compare machine performance efficiently.
+ 
+________________________________________
+12. Maintenance Alert Panel
+The Maintenance Alert Panel automatically identifies machines classified as High Risk.
+The displayed information includes:
+•	Machine ID 
+•	Date and Time 
+•	Temperature 
+•	Vibration 
+•	Power Consumption 
+•	Error Rate 
+•	Maintenance Score 
+•	Anomaly Score 
+•	Maintenance Risk 
+This module helps maintenance teams prioritize inspections and reduce equipment failures.
+ 
+________________________________________
+13. Historical Risk Analysis
+Historical anomaly trends are displayed using interactive line charts.
+The dashboard presents:
+•	Average Anomaly Score over Time 
+•	Average Maintenance Score over Time 
+These visualizations allow users to monitor long-term machine health.
+ 
+________________________________________
+14. Download Filtered Dataset
+Users can export filtered manufacturing data in CSV format for further analysis or reporting.
+This feature improves usability and supports decision-making.
+ 
+________________________________________
+
+
+
+
+Chapter 16: Results and Discussion
+The predictive maintenance system successfully identified abnormal machine behavior using the Isolation Forest algorithm.
+The model generated anomaly scores for every machine observation and classified maintenance risk into Low, Medium, and High categories.
+The Streamlit dashboard effectively visualized machine health, operational trends, and maintenance alerts.
+The analysis demonstrated that machines exhibiting higher vibration, increased temperature, and elevated error rates generally received higher anomaly scores.
+The dashboard enabled maintenance engineers to quickly identify critical machines and monitor historical changes in equipment condition.
+Overall, the system provides a practical solution for predictive maintenance in smart manufacturing environments.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+________________________________________
+Chapter 17: Business Insights
+The analysis produced several valuable insights:
+Early Failure Detection
+Increasing anomaly scores indicate abnormal machine behavior before equipment failure occurs.
+________________________________________
+Preventive Maintenance
+High-risk machines can be serviced before unexpected breakdowns, reducing downtime.
+________________________________________
+Resource Optimization
+Maintenance resources can be allocated based on machine risk rather than fixed schedules.
+________________________________________
+Production Improvement
+Monitoring production speed alongside anomaly scores helps identify machines experiencing performance degradation.
+________________________________________
+Communication Reliability
+Network latency and packet loss provide additional context for evaluating machine performance in 6G-enabled environments.
+________________________________________
+Operational Efficiency
+The dashboard enables engineers to continuously monitor machine health and make data-driven maintenance decisions.
+ 
+
+
+
+
+
+
+
+
+
+
+Chapter 18: Recommendations
+Based on the findings, the following recommendations are proposed:
+•	Prioritize maintenance for machines classified as High Risk. 
+•	Continuously monitor anomaly score trends to identify early warning signals. 
+•	Investigate machines exhibiting increasing vibration and temperature. 
+•	Improve network reliability to minimize communication delays. 
+•	Integrate the predictive maintenance system with real-time IoT sensors. 
+•	Perform periodic retraining of the machine learning model as new data becomes available. 
+•	Develop automated notification systems for maintenance teams.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Chapter 19: Future Scope
+The proposed predictive maintenance system demonstrates the successful application of machine learning for detecting abnormal machine behavior in smart manufacturing environments. Although the current implementation provides accurate anomaly detection and interactive visualization, several improvements can be incorporated in future versions to enhance its capabilities.
+19.1 Deep Learning-Based Anomaly Detection
+Future work may include the implementation of deep learning techniques such as Autoencoders and Long Short-Term Memory (LSTM) networks. These models can learn complex nonlinear relationships within sensor data and improve anomaly detection accuracy.
+19.2 Remaining Useful Life (RUL) Prediction
+The current system identifies abnormal machine behavior but does not estimate how long a machine can continue operating before failure. Incorporating Remaining Useful Life prediction models would enable maintenance teams to schedule repairs more effectively.
+19.3 Real-Time IoT Integration
+The present project uses historical manufacturing data. Future systems can connect directly to IoT sensors and industrial communication protocols to perform continuous monitoring and real-time anomaly detection.
+19.4 Cloud Deployment
+Deploying the application on cloud platforms such as AWS, Microsoft Azure, or Google Cloud would enable remote monitoring of manufacturing plants from any location.
+19.5 Automated Maintenance Alerts
+Email notifications, SMS alerts, or mobile application notifications can be integrated into the system to automatically inform maintenance engineers whenever a machine enters the High-Risk category.
+19.6 Explainable Artificial Intelligence (XAI)
+Future versions can incorporate Explainable AI techniques such as SHAP or LIME to explain why a machine has been classified as anomalous. This increases transparency and improves user trust in machine learning predictions.
+19.7 Digital Twin Integration
+The predictive maintenance system can be integrated with digital twin technology, allowing virtual representations of physical machines to simulate machine behavior and optimize maintenance schedules.
+________________________________________
+Chapter 20: Conclusion
+Predictive maintenance has become one of the most valuable applications of Artificial Intelligence in modern manufacturing. This internship project successfully demonstrates how machine learning techniques can be applied to identify abnormal machine behavior and support proactive maintenance planning.
+The manufacturing dataset was preprocessed and enhanced through feature engineering techniques, including rolling averages, deviation measures, maintenance score decay, and production efficiency metrics. These engineered features provided meaningful representations of machine behavior and improved anomaly detection performance.
+The Isolation Forest algorithm was selected as the anomaly detection model because it effectively identifies unusual observations without requiring labeled failure data. The model generated anomaly scores for each machine observation, which were further classified into Low, Medium, and High maintenance risk categories.
+An interactive Streamlit dashboard was developed to visualize machine performance, sensor behavior, maintenance alerts, production analysis, and historical risk trends. The dashboard enables maintenance engineers to monitor equipment health, identify high-risk machines, and make informed maintenance decisions.
+Overall, the developed predictive maintenance system demonstrates the practical application of data science and machine learning in Industry 4.0. The solution contributes to reduced downtime, optimized maintenance scheduling, improved production efficiency, and enhanced operational reliability.
+The knowledge gained during this internship strengthened practical skills in data preprocessing, feature engineering, anomaly detection, dashboard development, and business-oriented data visualization.
+________________________________________
+
+
+
+
+
+References
+1.	Liu, F. T., Ting, K. M., & Zhou, Z. H. (2008). Isolation Forest. Proceedings of the IEEE International Conference on Data Mining. 
+2.	Pedregosa, F., et al. (2011). Scikit-learn: Machine Learning in Python. Journal of Machine Learning Research. 
+3.	Streamlit Documentation. https://streamlit.io/ 
+4.	Plotly Documentation. https://plotly.com/python/ 
+5.	Pandas Documentation. https://pandas.pydata.org/ 
+6.	NumPy Documentation. https://numpy.org/ 
+7.	Python Software Foundation. https://www.python.org/ 
+8.	McKinsey & Company. Industry 4.0 and Smart Manufacturing. 
+________________________________________
+Appendix A: Software Requirements
+Software	Version
+Python	3.x
+Jupyter Notebook	Latest
+Streamlit	Latest
+Pandas	Latest
+NumPy	Latest
+Scikit-learn	Latest
+Plotly	Latest
+Joblib	Latest
+________________________________________
+Appendix B: Hardware Requirements
+Minimum Hardware
+•	Intel Core i3 Processor 
+•	4 GB RAM 
+•	20 GB Free Disk Space 
+•	Windows 10 or Above 
+Recommended Hardware
+•	Intel Core i5/i7 Processor 
+•	8 GB RAM or Higher 
+•	SSD Storage 
+•	Windows 11 
+________________________________________
+Appendix C: Project Workflow
+Dataset Collection
+        │
+        ▼
+Data Preprocessing
+        │
+        ▼
+Feature Engineering
+        │
+        ▼
+Isolation Forest Model
+        │
+        ▼
+Anomaly Score Generation
+        │
+        ▼
+Risk Classification
+        │
+        ▼
+Streamlit Dashboard
+        │
+        ▼
+Maintenance Decision Support
+________________________________________
+Appendix D: Project Deliverables
+The completed project consists of the following files:
+Predictive_Maintenance/
+│
+├── app.py
+├── feature_engineering.py
+├── train_model.py
+├── processed_manufacturing.csv
+├── final_manufacturing.csv
+├── isolation_forest.pkl
+├── requirements.txt
+├── README.md
+├── Internship_Report.pdf
+└── Dashboard_Screenshots/
+________________________________________
+Learning Outcomes
+During this internship, the following technical skills were developed:
+•	Data Cleaning and Preprocessing 
+•	Feature Engineering 
+•	Exploratory Data Analysis (EDA) 
+•	Unsupervised Machine Learning 
+•	Isolation Forest for Anomaly Detection 
+•	Predictive Maintenance Concepts 
+•	Streamlit Dashboard Development 
+•	Interactive Data Visualization using Plotly 
+•	Model Deployment Concepts 
+•	Technical Report Writing 
+________________________________________
+Overall Project Summary
+This internship project successfully developed an intelligent predictive maintenance system for a 6G-integrated smart manufacturing environment. By combining feature engineering, the Isolation Forest algorithm, and an interactive Streamlit dashboard, the system detects abnormal machine behavior, classifies maintenance risks, and provides actionable insights for proactive maintenance planning. The project demonstrates practical applications of machine learning in Industry 4.0 and highlights how data-driven decision-making can improve manufacturing efficiency, reduce operational downtime, and optimize maintenance resources.
+
